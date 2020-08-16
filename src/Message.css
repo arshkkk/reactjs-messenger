@@ -1,0 +1,31 @@
+.message{
+    margin-bottom: 10px;
+    width:fit-content;
+
+}
+.message--user{
+    margin-left: auto;
+}
+
+.message__cardContent{
+    padding:10px!important;
+}
+
+.message__card--user{
+    color:white!important;
+    background-color: green!important;
+}
+
+.message__timestamp{
+    font-size: smaller;
+    margin-right: 80px;
+}
+
+.message__timestamp--user{
+    margin-left: auto;
+}
+
+
+.message__card--nonuser{
+    background-color: lightgray!important;
+}
