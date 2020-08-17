@@ -1,5 +1,5 @@
 .message{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     width:fit-content;
 
 }
@@ -9,23 +9,40 @@
 
 .message__cardContent{
     padding:10px!important;
+    width: fit-content;
 }
+
+
+
 
 .message__card--user{
     color:white!important;
     background-color: green!important;
 }
 
+
 .message__timestamp{
     font-size: smaller;
-    margin-right: 80px;
+    width: fit-content;
+    margin-top: 0;
+    margin-block-end: 0px!important;
+    margin-block-start: 0px!important;
+
 }
 
 .message__timestamp--user{
-    margin-left: auto;
+    margin-left: auto!important;
 }
 
 
 .message__card--nonuser{
     background-color: lightgray!important;
+}
+
+.message__text{
+    word-wrap: break-word;
+    max-width: 300px;
+    width: fit-content;
+    font-size: large; 
+    margin:0;
 }

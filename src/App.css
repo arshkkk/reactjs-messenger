@@ -1,8 +1,14 @@
-/* .App {
-  text-align: center;
-} */
+.App {
+  width: 100%;
+}
+.app__header{
+  margin: 10px auto;
+  width: fit-content;
+  color: lightseagreen;
+}
 
 .app__messages{
+  
   padding:20px;
   margin-top: 20px;
  

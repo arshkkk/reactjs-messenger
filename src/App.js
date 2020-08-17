@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import './App.css';
-import  {Button, IconButton, TextField} from '@material-ui/core'
+import  { IconButton, TextField} from '@material-ui/core'
 import Message from './Message'
 import {db} from './firebase'
 import firebase from 'firebase'
@@ -19,12 +19,14 @@ function App() {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const [username, setUsername] = useState('')
-  const [openEmoji, setOpenEmoji] = useState(true)
+  const [openEmoji, setOpenEmoji] = useState(false)
 
   useEffect(()=>{
-    db.collection('messages').orderBy('timestamp','desc').onSnapshot(snapshot => {
+    let unsubscribe = db.collection('messages').orderBy('timestamp','desc').onSnapshot(snapshot => {
        setMessages(snapshot.docs.map( doc =>{ return { message: doc.data(), id: doc.id }}))
     })
+
+    return ()=> unsubscribe()
   },[])
 
   useEffect(()=>{
@@ -40,26 +42,32 @@ function App() {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
     setMessage('')
-    setOpenEmoji(true)
+    setOpenEmoji(false)
   }
+
+  const emojiPicker =  <Picker onSelect={emoji => setMessage(message+emoji.native)} />
 
 
 
   return (
     <div className="App">
-     <h2> Hello {username}, Welcome from Messenger</h2>
+     <h2 className="app__header"> Welcome {username}</h2>
      <form className="app__form" onSubmit={e => sendMessage(e)}>
      <IconButton onClick={() => setOpenEmoji(openEmoji?false:true)}>
      <EmojiEmotionsIcon/>
      </IconButton>
-     <TextField  label="Enter your message...." className="app__form__input" value={message} variant="filled" onChange = {e => setMessage(e.target.value)}/>
+     <TextField  onFocus={ ()=> setOpenEmoji(false)} label="Enter your message...." className="app__form__input" value={message} variant="filled" onChange = {e => setMessage(e.target.value)}/>
      <IconButton variant="contained" color="primary" type="submit" disabled={message===''}>
         <SendIcon fontSize="large"/>
      </IconButton>
      </form>  
-     <div hidden={openEmoji} className="app__emojiBox">
-     <Picker onSelect={emoji => setMessage(message+emoji.native)} />
+     {openEmoji?
+      <div className="app__emojiBox">
+       {emojiPicker}
      </div>
+     :null
+     }
+     
     <div className="app__messages">
       <FlipMove>
         {
